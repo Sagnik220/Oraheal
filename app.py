@@ -1,4 +1,4 @@
-from flask import Flask,request, url_for, redirect, render_template
+from flask import Flask,request, url_for, redirect, render_template,send_file,make_response
 import numpy as np
 import pandas as pd
 import numpy as np
@@ -6,6 +6,7 @@ import os
 import pickle
 import warnings
 import spacy
+from fpdf import FPDF
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 
@@ -23,6 +24,7 @@ def get_key(val,my_dict):
 		if val == value:
 			return key
 
+
 model = load_model('model.pkl')
 
 vec_model = load_model('vectorizer.pkl')
@@ -30,7 +32,7 @@ vec_model = load_model('vectorizer.pkl')
 
 app = Flask(__name__)
 
-
+disease=''
 
 @app.route('/')
 
@@ -43,9 +45,19 @@ def predict():
     vec_text =  vec_model.transform([x for x in request.form.values()]).toarray()
     pred = model.predict(vec_text)
     final_result = get_key(pred,prediction_labels)
-    print(final_result)
-    
     return render_template('index.html',pred='According to our estimate you are suffering from {}'.format(final_result))
+
+@app.route('/download',methods=['POST','GET'])
+def medicalreportspdf():
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size = 15)
+    pdf.cell(200, 10, txt = "ORAHEAL",ln = 1, align = 'R')
+    pdf.cell(200, 10, txt = "According to our estimate you are suffering from ",ln = 2, align = 'L')
+    response = make_response(pdf.output(dest='S').encode('latin-1'))
+    response.headers.set('Content-Disposition', 'attachment', filename='Report' + '.pdf')
+    response.headers.set('Content-Type', 'application/pdf')
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True)

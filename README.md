@@ -22,6 +22,11 @@ To run the AI-Prescription-App on your local machine, you will need to clone the
 https://github.com/Sagnik220/Oraheal.git
 ```
 
+**Architecture Design:**
+
+<img src="OrahealArch.jpg" width="900" height="600">
+
+
 **Contributions**
 ```
 We welcome contributions to the AI-Prescription-App. If you have an idea for a new feature or you have found a bug, please open an issue on GitHub and we will do our best to address it.

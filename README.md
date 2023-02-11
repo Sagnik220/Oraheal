@@ -26,6 +26,12 @@ https://github.com/Sagnik220/Oraheal.git
 
 <img src="OrahealArch.jpg" width="900" height="600">
 
+**Technolgies Used:**
+```
+Frotend: Html,CSS,MaterialUI
+Backend: Flask
+Model: Bagging Classifier[Training Accuracy Score: 99.8%,Validation Accuracy Score: 99.5%]
+```
 
 **Contributions**
 ```
